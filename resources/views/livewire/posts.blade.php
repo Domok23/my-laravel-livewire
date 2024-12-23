@@ -18,9 +18,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <div wire:loading class="mb-2">
-                            Processing...
-                        </div>
+
 
                         <table class="table table-bordered">
                             <thead>
@@ -59,6 +57,7 @@
 
                         <div class="mt-3">
                             {{ $posts->links() }}
+                            <div wire:loading class="mb-2">Processing...</div>
                         </div>
                     </div>
                 </div>

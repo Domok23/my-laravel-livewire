@@ -72,8 +72,6 @@ class Posts extends Component
 
         $this->closeModal();
         $this->resetInputFields();
-        // Refresh halaman setelah store
-        $this->resetPage();
     }
 
     public function edit($id)
@@ -90,7 +88,6 @@ class Posts extends Component
     {
         Post::find($id)->delete();
         session()->flash('message', 'Post Deleted Successfully.');
-        // Refresh halaman setelah delete
-        $this->resetPage();
+
     }
 }
