@@ -25,6 +25,7 @@
                                     <th>No.</th>
                                     <th>Title</th>
                                     <th>Description</th>
+                                    <th>Status</th>
                                     <th width="150px">Action</th>
                                 </tr>
                             </thead>
@@ -34,6 +35,7 @@
                                         <td>{{ $posts->firstItem() + $index }}</td>
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->description }}</td>
+                                        <td>{{ $post->status }}</td>  <!-- Menampilkan status -->
                                         <td>
                                             <button wire:click="edit({{ $post->id }})"
                                                 class="btn btn-primary btn-sm">
@@ -85,11 +87,25 @@
                             <input type="text" wire:model.defer="title" class="form-control">
                             @error('title')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
+                        
                         <div class="form-group">
                             <label>Description</label>
                             <textarea wire:model.defer="description" class="form-control"></textarea>
                             @error('description')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
+
+                        <!-- Dropdown untuk status -->
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select wire:model="status" class="form-control">
+                                <option value="">Select Status</option>
+                                @foreach ($statuses as $statusOption)
+                                    <option value="{{ $statusOption }}">{{ ucfirst($statusOption) }}</option>
+                                @endforeach
+                            </select>
+                            @error('status')<span class="text-danger">{{ $message }}</span>@enderror
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -12,9 +12,12 @@ class Posts extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $title, $description, $post_id;
+    public $title, $description, $post_id, $status; // Tambahkan status
     public $search = '';
     public $isOpen = 0;
+
+    // Daftar status yang tersedia
+    public $statuses = ['active', 'archive', 'pending', 'gaskan'];
 
     // Tambahkan ini untuk reset pagination saat pencarian
     public function updatingSearch()
@@ -55,6 +58,7 @@ class Posts extends Component
         $this->title = '';
         $this->description = '';
         $this->post_id = '';
+        $this->status = '';  // Reset status
     }
 
     private function trimInputs()
@@ -68,11 +72,13 @@ class Posts extends Component
         $this->validate([
             'title' => 'required',
             'description' => 'required',
+            'status' => 'required|in:active,archive,pending,gaskan', // Validasi status
         ]);
 
         Post::updateOrCreate(['id' => $this->post_id], [
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'status' => $this->status, // Simpan status
         ]);
 
         session()->flash(
@@ -90,6 +96,7 @@ class Posts extends Component
         $this->post_id = $id;
         $this->title = $post->title;
         $this->description = $post->description;
+        $this->status = $post->status;  // Ambil status untuk form edit
 
         $this->openModal();
     }
