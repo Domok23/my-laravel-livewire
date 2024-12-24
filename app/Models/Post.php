@@ -9,8 +9,16 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'description'
-    ];
+    protected $fillable = ['title', 'description'];
+
+    // Mutator untuk trimming white spaces
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = preg_replace('/\s+/', ' ', trim($value));
+    }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = preg_replace('/\s+/', ' ', trim($value));
+    }
 }

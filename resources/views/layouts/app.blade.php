@@ -28,6 +28,11 @@
         window.addEventListener('hide-form', event => {
             $('#formModal').modal('hide');
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('show-form', () => $('#formModal').modal('show'));
+            Livewire.on('hide-form', () => $('#formModal').modal('hide'));
+        });
     </script>
 </body>
 </html>

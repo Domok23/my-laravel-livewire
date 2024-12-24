@@ -13,6 +13,7 @@ class Posts extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $title, $description, $post_id;
+    public $search = '';
     public $isOpen = 0;
 
     // Tambahkan ini untuk reset pagination saat pencarian
@@ -23,9 +24,12 @@ class Posts extends Component
 
     public function render()
     {
-        return view('livewire.posts', [
-            'posts' => Post::latest()->paginate(5)
-        ]);
+        $posts = Post::where('title', 'like', "%{$this->search}%")
+        ->orWhere('description', 'like', "%{$this->search}%")
+        ->latest()
+            ->paginate(5);
+
+        return view('livewire.posts', compact('posts'));
     }
 
     public function create()
@@ -51,6 +55,12 @@ class Posts extends Component
         $this->title = '';
         $this->description = '';
         $this->post_id = '';
+    }
+
+    private function trimInputs()
+    {
+        $this->title = preg_replace('/\s+/', ' ', trim($this->title));
+        $this->description = preg_replace('/\s+/', ' ', trim($this->description));
     }
 
     public function store()
@@ -88,6 +98,5 @@ class Posts extends Component
     {
         Post::find($id)->delete();
         session()->flash('message', 'Post Deleted Successfully.');
-
     }
 }

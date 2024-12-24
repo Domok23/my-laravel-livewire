@@ -18,8 +18,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-
-
+                        <input type="text" wire:model.debounce.300ms="search" placeholder="Search posts..." class="form-control mb-3">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
